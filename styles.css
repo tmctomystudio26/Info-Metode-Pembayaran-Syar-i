@@ -1,0 +1,87 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://raw.githubusercontent.com/tmctomystudio26/github.musik.io/main/dc1cf51f10a27c2705b4acfcdde60811.jpg');
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+.music-player {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+#play-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+#play-icon {
+    width: 30px;
+    height: 30px;
+}
+
+#timer, #real-time {
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.info-section {
+    margin-bottom: 20px;
+}
+
+.info-section img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.rekening {
+    margin-bottom: 15px;
+}
+
+.rekening h3 {
+    margin: 5px 0;
+}
+
+.rekening p, .rekening small {
+    margin: 0;
+}
+
+.running-text {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    font-size: 14px;
+}
+
+.date-container {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px 0;
+    font-size: 14px;
+}

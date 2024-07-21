@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Info Metode Pembayaran</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: url('https://raw.githubusercontent.com/tmctomystudio26/github.musik.io/main/dc1cf51f10a27c2705b4acfcdde60811.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden; /* Mencegah scroll horizontal */
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.75); /* Sedikit transparansi untuk kontras */
+            padding: 20px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            margin-top: 60px; /* Memberikan jarak bawah dari running text */
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #444;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        h3.subtitle {
+            font-size: 1em;
+            color: #555;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        /* CSS untuk jadwal sholat */
+         @keyframes blink {
+    0% {
+        background-color: #fff; /* Warna awal */
+    }
+    25% {
+        background-color: #ffeb3b; /* Warna kuning */
+    }
+    50% {
+        background-color: #ff5722; /* Warna oranye */
+    }
+    75% {
+        background-color: #4caf50; /* Warna hijau */
+    }
+    100% {
+        background-color: #fff; /* Warna akhir */
+    }
+}
+
+.prayer-times-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.prayer-time-box {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    animation: blink 2s infinite; /* Menambahkan animasi kelap-kelip */
+}
+
+.prayer-time-box:nth-child(odd) {
+    animation-duration: 2.5s;
+}
+
+.prayer-time-box:nth-child(even) {
+    animation-duration: 2s;
+}
+        .qris {
+            background-color: #fafafa;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 20px;
+            margin-top: 40px; /* Menambah jarak atas */
+        }
+        .qris h3 {
+    margin: 0 0 15px 0; /* Jarak antara h3 dan elemen di bawahnya */
+    font-size: 1.2em;
+    color: #555;
+    padding-top: 5px; /* Jarak antara h3 dan tepi atas .qris */
+        }
+.qris img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto; /* Center gambar jika perlu */
+}
+        .search-container {
+    margin-top: 40px; /* Menambah jarak */
+        }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .search-container input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        .rekening {
+            background-color: #fafafa;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 20px;
+        }
+        .rekening h3 {
+            margin: 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+        .rekening p {
+            margin: 5px 0 15px 0;
+            font-size: 1em;
+            color: #333;
+        }
+        .rekening small {
+            display: block;
+            color: #777;
+            margin-top: 10px;
+        }
+        .audio-controls {
+            text-align: center;
+            margin: 30px 0; /* Menambahkan jarak atas dan bawah */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .audio-controls button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .audio-controls button:hover {
+            transform: scale(1.1);
+        }
+        .audio-controls img {
+            width: 16px; /* Ukuran lebih kecil */
+            height: 16px; /* Ukuran lebih kecil */
+        }
+        .timer {
+            font-size: 1em;
+            color: #555;
+        }
+        .real-time {
+            text-align: center;
+            font-size: 1em;
+            color: #555;
+            margin-left: 20px; /* Menambahkan jarak antara kontrol musik dan waktu real-time */
+        }
+        audio {
+            display: none; /* Hide the default audio player */
+        }
+        .marquee-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            overflow: hidden;
+            white-space: nowrap;
+            z-index: 1000; /* Menjaga agar marquee di atas konten lainnya */
+            padding: 5px 0;
+            box-shadow: none; /* Pastikan tidak ada bayangan kotak */
+            border: none; /* Pastikan tidak ada border */
+            text-shadow: none; /* Pastikan tidak ada efek bayangan teks */
+        }
+        .marquee {
+            display: inline-block;
+            padding: 0 10px; /* Mengurangi padding */
+            font-size: 12px; /* Ukuran lebih kecil */
+            animation: marquee 15s linear infinite;
+            text-shadow: none; /* Hilangkan efek kelap-kelip */
+            border: none; /* Pastikan tidak ada border */
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .date-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(51, 51, 51, 0.9);
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 14px;
+            z-index: 1000; /* Menjaga agar tetap di atas konten lainnya */
+        }
+    </style>
+</head>
+<body>
+    <div class="marquee-container">
+        <div class="marquee">
+            الوَقْتُ كَالسَّيْفِ، إِنْ لَـمْ تَقْطَعْهُ قَطَعَكَ | Waktu itu ibarat pedang, apabila engkau tidak memanfaatkannya, ia akan memenggalmu.
+        </div>
+    </div>
+    <div class="container">
+        <h1>Info Metode Pembayaran</h1>
+        <h3 class="subtitle">tMC Tomy Studio</h3>
+        <div class="audio-controls">
+            <button id="play-btn">
+                <img id="play-icon" src="https://raw.githubusercontent.com/tmctomystudio26/github.musik.io/main/images-removebg-preview.png" alt="Play">
+            </button>
+            <div class="timer" id="timer">00:00 / 00:00</div>
+            <div class="real-time" id="real-time">00:00:00</div>
+        </div>
+        <div class="prayer-times">
+            <h2>Jadwal Sholat</h2>
+            <div class="prayer-times-container">
+    <div class="prayer-time-box" id="imsyak">Imsyak</div>
+    <div class="prayer-time-box" id="fajr">Subuh</div>
+    <div class="prayer-time-box" id="dhuhr">Dzuhur</div>
+    <div class="prayer-time-box" id="asr">Ashar</div>
+    <div class="prayer-time-box" id="maghrib">Maghrib</div>
+    <div class="prayer-time-box" id="isha">Isya</div>
+</div>
+<div id="location-info">Loading location...</div>
+        </div>
+        <div class="qris">
+            <h3>QRIS</h3>
+            <img src="https://raw.githubusercontent.com/tmctomystudio26/github.musik.io/main/Dark%20Blue%20Modern%20QR%20Code%20Instagram%20Post%20(2)-picsay.png" alt="QRIS">
+            <p>Untuk pembayaran menggunakan QRIS, scan QR code di atas.</p>
+        </div>
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="🔍   Cari e-wallet atau rekening...">
+        </div>
+        <div class="section" id="rekening-container">
+            <h2>E-Wallet</h2>
+            <div class="rekening" data-name="DANA">
+                <h3>DANA</h3>
+                <p>083103872432</p>
+                <small>a.n TOMI NUR DIYANA</small>
+            </div>
+            <div class="rekening" data-name="SHOPEEPAY">
+                <h3>SHOPEEPAY</h3>
+                <p>085159772620</p>
+                <small>a.n TOMI NUR DIYANA</small>
+            </div>
+            <div class="rekening" data-name="GOPAY">
+                <h3>GOPAY</h3>
+                <p>085159772620</p>
+                <small>a.n TOMI NUR DIYANA</small>
+            </div>
+            <div class="rekening" data-name="OVO">
+                <h3>OVO</h3>
+                <p>083103872432</p>
+                <small>a.n TOMI NUR DIYANA</small>
+            </div>
+            <h2>Rekening Bank</h2>
+            <div class="rekening" data-name="Bank BRI">
+                <h3>Bank BRI</h3>
+                <p>678601034171532</p>
+                <small>a.n TOMI NUR DIYANA</small>
+            </div>
+            <div class="rekening" data-name="Bank MANDIRI">
+                <h3>Bank MANDIRI</h3>
+                <p>1770021394942</p>
+                <small>a.n TOMI NUR DIYANA</small>
+            </div>
+            <div class="rekening" data-name="Seabank">
+                <h3>Seabank</h3>
+                <p>901611278634</p>
+                <small>a.n TOMI NUR DIYANA</small>
+            </div>
+            <div class="rekening" data-name="Neo Bank">
+                <h3>Neo Bank</h3>
+                <p>5859459192084589</p>
+                <small>a.n TOMI NUR DIYANA</small>
+            </div>
+            <div class="rekening" data-name="MNC Bank">
+                <h3>MNC Bank</h3>
+                <p>206010005342093</p>
+                <small>a.n TOMI NUR DIYANA</small>
+            </div>
+            <div class="rekening" data-name="Sampoerna Bank">
+                <h3>Sampoerna Bank</h3>
+                <p>1022819603</p>
+                <small>a.n TOMI NUR DIYANA</small>
+            </div>
+        </div>
+        <audio id="audio-player" loop>
+            <source src="audio.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+    <div class="date-container" id="date-container">
+        <!-- Tanggal akan ditampilkan di sini -->
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
