@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }, (error) => {
                 console.error('Error getting location:', error);
-                locationInfo.textContent = 'Lokasi tidak tersedia.';
+                locationInfo.textContent = 'Lokasi tidak tersedia, silakan aktifkan setelan lokasi !';
             });
         } else {
             locationInfo.textContent = 'Geolocation tidak didukung oleh browser ini.';
