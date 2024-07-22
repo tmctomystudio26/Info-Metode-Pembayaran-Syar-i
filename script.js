@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateRealTime, 1000); // Update every second
 
     // Update date
-    async function updateDate() {
+    function updateDate() {
         const now = new Date();
         const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
         const months = [
@@ -62,28 +62,46 @@ document.addEventListener('DOMContentLoaded', () => {
         const day = String(now.getDate()).padStart(2, '0');
         const month = months[now.getMonth()];
         const year = now.getFullYear();
-        const dateStr = `${dayName}, ${day} ${month} ${year}`;
-        
-        // Fetch Hijri date
-        try {
-            const response = await fetch(`https://api.aladhan.com/v1/gToH?date=${year}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`);
-            const data = await response.json();
-            
-            if (data && data.data && data.data.hijri) {
-                const hijri = data.data.hijri;
-                const hijriDate = `${hijri.weekday.ar} ${String(hijri.day).padStart(2, '0')} ${hijri.month.ar} ${hijri.year}`;
-                dateContainer.innerHTML = `${dateStr} | ${hijriDate}`;
-            } else {
-                dateContainer.textContent = dateStr;
-            }
-        } catch (error) {
-            console.error('Error fetching Hijri date:', error);
-            dateContainer.textContent = dateStr;
-        }
+        dateContainer.textContent = `${dayName}, ${day} ${month} ${year}`;
     }
 
     // Initialize date
     updateDate();
+
+    // Fetch Hijri date
+    async function fetchHijriDate() {
+        try {
+            const response = await fetch('https://service.unisayogya.ac.id/kalender/hijriahmuhammadiyah');
+            const data = await response.json();
+
+            if (data && data.hijri && data.hijri.date) {
+                const hijriDate = data.hijri.date;
+                const hijriDay = hijriDate.day_arabic; // Hari dalam bahasa Arab
+                const hijriDateFormatted = `${hijriDay}, ${hijriDate.date} ${hijriDate.month} ${hijriDate.year}`;
+
+                // Update the date container
+                const now = new Date();
+                const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                const months = [
+                    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
+                    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+                ];
+                const dayName = days[now.getDay()];
+                const day = String(now.getDate()).padStart(2, '0');
+                const month = months[now.getMonth()];
+                const year = now.getFullYear();
+                dateContainer.innerHTML = `${dayName}, ${day} ${month} ${year} | ${hijriDateFormatted}`;
+            } else {
+                dateContainer.textContent = 'Tanggal Hijriah tidak tersedia.';
+            }
+        } catch (error) {
+            console.error('Error fetching Hijri date:', error);
+            dateContainer.textContent = 'Error fetching Hijri date.';
+        }
+    }
+
+    // Initialize Hijri date
+    fetchHijriDate();
 
     // Filter rekening based on search input
     searchInput.addEventListener('input', () => {
@@ -165,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update running text style
     const style = document.createElement('style');
     style.textContent = `
-        .running-text {
+                .running-text {
             position: fixed;
             top: 0;
             left: 0;
@@ -180,44 +198,43 @@ document.addEventListener('DOMContentLoaded', () => {
             overflow: hidden;
             box-shadow: 0 2px 4px rgba(0,0,0,0.3);
             animation: marquee 10s linear infinite;
-           }
-           
-           @keyframes marquee {
-               0% { transform: translateX(100%); }
-               100% { transform: translateX(-100%); }
-           }
-           
-           .prayer-times-container {
-               display: flex;
-               flex-wrap: wrap;
-               gap: 10px;
-               margin: 20px 0;
-           }
-           
-           .prayer-time-box {
-               background: #f0f0f0;
-               border: 1px solid #ccc;
-               border-radius: 5px;
-               padding: 10px;
-               text-align: center;
-               flex: 1 1 calc(20% - 10px);
-               box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-           }
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        .prayer-times-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .prayer-time-box {
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+            flex: 1 1 calc(20% - 10px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
 
-           .prayer-times-title {
-               font-size: 14px;
-               margin-bottom: 10px;
-           }
+        .prayer-times-title {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
 
-           #location-info {
-               font-size: 12px;
-               color: #000000;
-               margin-top: 10px;
-               font-weight: bold; /* Menjadikan teks bold */
-           }
-       `;
-       document.head.appendChild(style);
-   });
+        #location-info {
+            font-size: 12px;
+            color: #000000;
+            margin-top: 10px;
+            font-weight: bold; /* Menjadikan teks bold */
+        }
+    `;
+    document.head.appendChild(style);
+});
 
-
-                                                                                                                 
+            
