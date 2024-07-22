@@ -50,14 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
     updateRealTime();
     setInterval(updateRealTime, 1000); // Update every second
 
-    // Format Hijri Date (dummy implementation)
-    function formatHijriDate(date) {
-        // Replace with actual formatting if needed
-        return date;
-    }
-
     // Update date
-    async function updateDate() {
+    function updateDate() {
         const now = new Date();
         const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
         const months = [
@@ -68,22 +62,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const day = String(now.getDate()).padStart(2, '0');
         const month = months[now.getMonth()];
         const year = now.getFullYear();
-        const gregorianDate = `${dayName}, ${day} ${month} ${year}`;
-
-        try {
-            const response = await fetch('https://service.unisayogya.ac.id/kalender/hijriahmuhammadiyah');
-            const data = await response.json();
-            const hijriDate = data[0].tanggal;
-            dateContainer.textContent = `${gregorianDate} | ${formatHijriDate(hijriDate)}`;
-        } catch (error) {
-            console.error('Error fetching Hijri date:', error);
-            dateContainer.textContent = `${gregorianDate} | Error fetching Hijri date`;
-        }
+        dateContainer.textContent = `${dayName}, ${day} ${month} ${year}`;
     }
 
     // Initialize date
     updateDate();
-    setInterval(updateDate, 60000); // Update every minute
 
     // Filter rekening based on search input
     searchInput.addEventListener('input', () => {
@@ -200,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
             border-radius: 5px;
             padding: 10px;
             text-align: center;
-                        flex: 1 1 calc(20% - 10px);
+            flex: 1 1 calc(20% - 10px);
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
@@ -210,13 +193,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         #location-info {
-            font-size: 12px;
-            color: #000000;
-            margin-top: 10px;
-            font-weight: bold; /* Menjadikan teks bold */
-        }
+    font-size: 12px;
+    color: #000000;
+    margin-top: 10px;
+    font-weight: bold; /* Menjadikan teks bold */
+}
     `;
     document.head.appendChild(style);
 });
-
-            
