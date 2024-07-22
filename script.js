@@ -50,14 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
     updateRealTime();
     setInterval(updateRealTime, 1000); // Update every second
 
-    // Format Hijri Date (dummy implementation)
-    function formatHijriDate(date) {
-        // Replace with actual formatting if needed
-        return date;
-    }
-
     // Update date
-    async function updateDate() {
+    function updateDate() {
         const now = new Date();
         const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
         const months = [
@@ -68,22 +62,46 @@ document.addEventListener('DOMContentLoaded', () => {
         const day = String(now.getDate()).padStart(2, '0');
         const month = months[now.getMonth()];
         const year = now.getFullYear();
-        const gregorianDate = `${dayName}, ${day} ${month} ${year}`;
-
-        try {
-            const response = await fetch('https://service.unisayogya.ac.id/kalender/hijriahmuhammadiyah');
-            const data = await response.json();
-            const hijriDate = data[0].tanggal;
-            dateContainer.textContent = `${gregorianDate} | ${formatHijriDate(hijriDate)}`;
-        } catch (error) {
-            console.error('Error fetching Hijri date:', error);
-            dateContainer.textContent = `${gregorianDate} | Error fetching Hijri date`;
-        }
+        dateContainer.textContent = `${dayName}, ${day} ${month} ${year}`;
     }
 
     // Initialize date
     updateDate();
-    setInterval(updateDate, 60000); // Update every minute
+
+    // Fetch Hijri date
+    async function fetchHijriDate() {
+        try {
+            const response = await fetch('https://service.unisayogya.ac.id/kalender/hijriahmuhammadiyah');
+            const data = await response.json();
+
+            if (data && data.hijri && data.hijri.date) {
+                const hijriDate = data.hijri.date;
+                const hijriDay = hijriDate.day_arabic; // Hari dalam bahasa Arab
+                const hijriDateFormatted = `${hijriDay}, ${hijriDate.date} ${hijriDate.month} ${hijriDate.year}`;
+
+                // Update the date container
+                const now = new Date();
+                const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                const months = [
+                    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
+                    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+                ];
+                const dayName = days[now.getDay()];
+                const day = String(now.getDate()).padStart(2, '0');
+                const month = months[now.getMonth()];
+                const year = now.getFullYear();
+                dateContainer.innerHTML = `${dayName}, ${day} ${month} ${year} | ${hijriDateFormatted}`;
+            } else {
+                dateContainer.textContent = 'Tanggal Hijriah tidak tersedia.';
+            }
+        } catch (error) {
+            console.error('Error fetching Hijri date:', error);
+            dateContainer.textContent = 'Error fetching Hijri date.';
+        }
+    }
+
+    // Initialize Hijri date
+    fetchHijriDate();
 
     // Filter rekening based on search input
     searchInput.addEventListener('input', () => {
@@ -165,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update running text style
     const style = document.createElement('style');
     style.textContent = `
-        .running-text {
+                .running-text {
             position: fixed;
             top: 0;
             left: 0;
@@ -200,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
             border-radius: 5px;
             padding: 10px;
             text-align: center;
-                        flex: 1 1 calc(20% - 10px);
+            flex: 1 1 calc(20% - 10px);
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
@@ -219,4 +237,4 @@ document.addEventListener('DOMContentLoaded', () => {
     document.head.appendChild(style);
 });
 
-            
+        
